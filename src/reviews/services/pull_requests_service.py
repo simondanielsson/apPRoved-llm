@@ -1,10 +1,12 @@
+"""Module for pull request services."""
+
 import asyncio
 import logging
 
 from src.common.tools.review_pull_request import ReviewPullRequest
+from src.config import config
 from src.reviews.dto.responses import PRReviewResponse
 from src.reviews.models.pull_requests import FileReview, PullRequestFileChanges
-from src.config import config
 from src.utils.http import send_http_post_request
 
 logger = logging.getLogger(__name__)

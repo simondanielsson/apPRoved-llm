@@ -26,7 +26,7 @@ github_token: ${GITHUB_TOKEN}
 
 # TODO: KEEP ONLY THE ONES BELOW:
 modules:
-  common: 
+  common:
     request_timeout: 600.0
   reviews:
     max_concurrent_file_reviews: 5

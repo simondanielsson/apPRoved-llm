@@ -1,3 +1,5 @@
+"""Response DTOs for the reviews module."""
+
 from pydantic import BaseModel
 
 from src.reviews.models.pull_requests import FileReview

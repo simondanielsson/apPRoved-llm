@@ -90,7 +90,7 @@ repos:
     rev: "v2.9.1"
     hooks:
       - id: vulture
-        args: ["api", "--min-confidence=80"]
+        args: ["src", "--min-confidence=80"]
   - repo: https://github.com/Casper321/reST-docstring-checker
     rev: v0.0.2
     hooks:

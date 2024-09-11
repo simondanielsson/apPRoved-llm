@@ -2,8 +2,8 @@
 
 from dotenv import load_dotenv
 
-from src.utils.config import load_config
 from configs import CONFIGS_DIRECTORY
+from src.utils.config import load_config
 
 # Load environment variables.
 load_dotenv()

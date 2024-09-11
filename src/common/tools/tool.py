@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from src.common.models.message import PromptType
     from src.common.constants import Tools
+    from src.common.models.message import PromptType
 
 
 @runtime_checkable

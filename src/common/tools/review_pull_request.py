@@ -5,9 +5,9 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING, Any, AsyncIterator
 
+from src.common.constants import Tools
 from src.common.models.message import PromptType
 from src.common.tools.tool import get_hydrated_prompt, get_kwarg, get_tool_config_path
-from src.common.constants import Tools
 from src.utils.llm import ask_llm
 
 if TYPE_CHECKING:
@@ -24,14 +24,14 @@ class ReviewPullRequest:
     @classmethod
     async def arun(
         cls: type[ReviewPullRequest],
-        *args: Any,
+        *args: Any,  # noqa: ARG003
         **kwargs: Any,
     ) -> AsyncIterator[str]:
         """Use the tool asynchronously.
 
         :return: Tool output.
         """
-        logger.info(f"Run {cls.tool} tool.")
+        logger.info("Run %s tool.", cls.tool)
 
         request: PullRequestFileChanges = get_kwarg(kwargs, "request")
 

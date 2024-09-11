@@ -1,16 +1,18 @@
+"""Language model utilities."""
+
 from typing import AsyncIterator
 
 from box import Box
-from langchain_openai import ChatOpenAI
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import (
     BaseMessage,
     HumanMessage,
     SystemMessage,
 )
+from langchain_openai import ChatOpenAI
 
-from src.config import config
 from src.common.constants import LLMProvider
+from src.config import config
 from src.utils.exceptions import ConfigError
 
 

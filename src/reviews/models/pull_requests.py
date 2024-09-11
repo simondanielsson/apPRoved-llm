@@ -1,3 +1,5 @@
+"""Models for pull requests."""
+
 from pydantic import BaseModel
 
 
@@ -14,7 +16,8 @@ class PullRequestFileChanges(BaseModel):
 class FileReview(BaseModel):
     """Review of a file in a pull request.
 
-    Attributes:
+    Attributes
+    ----------
         - filename: The name of the file.
         - content: The content of the review.
     """
