@@ -1,0 +1,42 @@
+environment: ${ENVIRONMENT}
+
+# Database configuration.
+database:
+  dialect: ${DB_DIALECT}
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  db_name: ${DB_NAME}
+  username: ${DB_USER}
+  password: ${DB_PASSWORD}
+  # Application specific database configuration.
+  common:
+    # app: Refers to data used by web application.
+    app: common_app
+  reviewer:
+    # app: Refers to data used by web application.
+    app: reviewer_app
+
+# Authentication configuration.
+secret_key: ${SECRET_KEY}
+secret_algorithm: HS256
+
+# Github authentication
+github_token: ${GITHUB_TOKEN}
+
+
+# TODO: KEEP ONLY THE ONES BELOW:
+modules:
+  common: 
+    request_timeout: 600.0
+  reviews:
+    max_concurrent_file_reviews: 5
+
+# LLM configuration.
+provider_to_llm:
+  openai: gpt-4o
+llm_provider: openai
+llm_config:
+
+# Connection configuration
+approved_api_url: ${APPROVED_API_URL}
+amqp_url: ${AMQP_URL}
