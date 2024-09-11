@@ -3,6 +3,10 @@
 	install
 	install_dev
 	run
+	build-image
+
+IMAGE_NAME := approved-llm
+IMAGE_TAG := latest
 
 install_poetry:
 	pip install --upgrade pip
@@ -20,3 +24,8 @@ install_dev: install_poetry
 
 run:
 	python -m src.main
+
+build-image:
+	echo "Building ${IMAGE_NAME}:${IMAGE_TAG} image...";
+	docker image build -t ${IMAGE_NAME}:${IMAGE_TAG} .;
+	echo "Image ${IMAGE_NAME}:${IMAGE_TAG} built.";
