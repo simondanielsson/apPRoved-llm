@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "api"
+name = "src"
 version = "0.1.0"
-description = "API repository."
+description = "LLM Service for apPRoved"
 authors = [ "Simon Danielsson" ]
 license = ""
 readme = "README.md"
 packages = []
 
 [tool.poetry.scripts]
-approved = "api.__main__:main"
+approved = "src.main:main"
 
 [tool.poetry.dependencies]
 python = "~3.11"
