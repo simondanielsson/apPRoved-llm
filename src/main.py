@@ -11,7 +11,12 @@ from src.utils.amqp import AsyncRabbitMQClient
 logger = logging.getLogger(__name__)
 
 
-async def main() -> None:
+def launch_app() -> None:
+    """Launch the application."""
+    asyncio.run(listen_for_messages())
+
+
+async def listen_for_messages() -> None:
     """Listen for messages from the RabbitMQ queue."""
     rabbitmq_client = AsyncRabbitMQClient()
     await rabbitmq_client.connect()
@@ -41,4 +46,4 @@ async def handle_events() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    launch_app()
