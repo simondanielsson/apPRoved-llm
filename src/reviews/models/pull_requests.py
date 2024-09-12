@@ -24,3 +24,4 @@ class FileReview(BaseModel):
 
     filename: str
     content: str
+    patch: str

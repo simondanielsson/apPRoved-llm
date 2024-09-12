@@ -26,13 +26,14 @@ async def create_review_from_file_diffs(
     ]
     review_contents = await asyncio.gather(*review_tasks)
     file_names = [review.filename for review in file_diffs]
+    patches = [review.patch for review in file_diffs]
 
     review = PRReviewResponse(
         review_id=review_id,
         review_status_id=review_status_id,
         file_reviews=[
-            FileReview(filename=filename, content=content)
-            for filename, content in zip(file_names, review_contents)
+            FileReview(filename=filename, content=content, patch=patch)
+            for filename, content, patch in zip(file_names, review_contents, patches)
         ],
     )
     url = f"{config.approved_api_url}/reviews/complete"
