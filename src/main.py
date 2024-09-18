@@ -32,9 +32,9 @@ async def listen_for_messages() -> None:
         logger.info("Listening for messages...")
 
     elif config.amqp_mode == "pubsub":
-        logging.info("Starting Pub/Sub subscriber...")
         project_id = config.gcp_project_id
         subscription_id = config.gcp_subscription_id
+        logging.info("Starting Pub/Sub subscriber %s...", subscription_id)
         callback = reviews_controllers.create_review_from_file_diffs
         subscriber = AsyncPubSubSubscriber(
             project_id,
