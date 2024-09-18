@@ -21,6 +21,7 @@ def launch_app() -> None:
 async def listen_for_messages() -> None:
     """Listen for messages from the RabbitMQ queue."""
     if config.amqp_mode == "rabbitmq":
+        logger.info("Starting AMQP consumer...")
         rabbitmq_client = AsyncRabbitMQClient()
         await rabbitmq_client.connect()
 
@@ -29,8 +30,9 @@ async def listen_for_messages() -> None:
             callback=reviews_controllers.create_review_from_file_diffs,
         )
         logger.info("Listening for messages...")
+
     elif config.amqp_mode == "pubsub":
-        logger.info("PubSub mode is not implemented yet")
+        logging.info("Starting Pub/Sub subscriber...")
         project_id = config.gcp_project_id
         subscription_id = config.gcp_subscription_id
         callback = reviews_controllers.create_review_from_file_diffs
@@ -42,6 +44,7 @@ async def listen_for_messages() -> None:
         )
 
         try:
+            logger.info("Listening for messages on subscription %s...", subscription_id)
             await subscriber.start()
         except KeyboardInterrupt:
             logger.info("Received keyboard interrupt, shutting down...")
