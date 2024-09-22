@@ -4,6 +4,7 @@
 	install_dev
 	run
 	build-image
+	build
 
 IMAGE_NAME := approved-llm
 IMAGE_TAG := latest
@@ -27,5 +28,13 @@ run:
 
 build-image:
 	echo "Building ${IMAGE_NAME}:${IMAGE_TAG} image...";
-	docker image build -t ${IMAGE_NAME}:${IMAGE_TAG} .;
+	docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .;
+	echo "Image ${IMAGE_NAME}:${IMAGE_TAG} built.";
+
+build:
+	echo "Building ${IMAGE_NAME}:${IMAGE_TAG} image...";
+	docker build \
+		--tag ${IMAGE_NAME}-prod:${IMAGE_TAG} \
+		--platform linux/amd64 \
+		${PWD};
 	echo "Image ${IMAGE_NAME}:${IMAGE_TAG} built.";

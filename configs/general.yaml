@@ -1,5 +1,8 @@
 environment: ${ENVIRONMENT}
 
+approved_api_url: ${APPROVED_API_URL}
+amqp_mode: ${AMQP_MODE}
+
 # Database configuration.
 database:
   dialect: ${DB_DIALECT}
@@ -37,6 +40,10 @@ provider_to_llm:
 llm_provider: openai
 llm_config:
 
-# Connection configuration
-approved_api_url: ${APPROVED_API_URL}
+# Message queue configuration
+# RabbitMQ
 amqp_url: ${AMQP_URL}
+
+# Pub/Sub
+gcp_project_id: ${GCP_PROJECT_ID}
+gcp_subscription_id: ${GCP_SUBSCRIPTION_ID}
