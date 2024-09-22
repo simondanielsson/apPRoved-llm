@@ -5,9 +5,9 @@ import logging
 
 from src.common.tools.review_pull_request import ReviewPullRequest
 from src.config import config
-from src.reviews.dto.responses import PRReviewResponse
+from src.reviews.constants import ReviewStatus
 from src.reviews.models.pull_requests import FileReview, PullRequestFileChanges
-from src.utils.http import send_http_post_request
+from src.utils import api
 
 logger = logging.getLogger(__name__)
 
@@ -20,35 +20,51 @@ async def create_review_from_file_diffs(
     """Create a pull request review from file diffs."""
     semaphore = asyncio.Semaphore(config.modules.reviews.max_concurrent_file_reviews)
 
+    total_files = len(file_diffs)
+    reviewed_files = 0
+
     review_tasks = [
         _review_file_diff(file_diff=file_diff, semaphore=semaphore)
         for file_diff in file_diffs
     ]
-    review_contents = await asyncio.gather(*review_tasks)
-    file_names = [review.filename for review in file_diffs]
-    patches = [review.patch for review in file_diffs]
+    review_per_file: dict[str, str] = {}
+    for task in asyncio.as_completed(review_tasks):
+        review_per_file |= await task
 
-    review = PRReviewResponse(
+        reviewed_files += 1
+        progress_value = int((reviewed_files / total_files) * 100)
+        await api.update_progress(
+            review_status_id,
+            progress_value,
+            ReviewStatus.processing,
+        )
+
+    patches_per_file = {file_diff.filename: file_diff.patch for file_diff in file_diffs}
+
+    file_reviews = [
+        FileReview(
+            filename=filename,
+            content=content,
+            patch=patches_per_file.get(filename, ""),
+        )
+        for filename, content in review_per_file.items()
+    ]
+    await api.complete_review(
         review_id=review_id,
         review_status_id=review_status_id,
-        file_reviews=[
-            FileReview(filename=filename, content=content, patch=patch)
-            for filename, content, patch in zip(file_names, review_contents, patches)
-        ],
+        file_reviews=file_reviews,
     )
-    url = f"{config.approved_api_url}/reviews/complete"
-    await send_http_post_request(content=review.model_dump(), url=url)
 
 
 async def _review_file_diff(
     file_diff: PullRequestFileChanges,
     semaphore: asyncio.Semaphore,
-) -> str:
+) -> dict[str, str]:
     """Create a review task for a single file.
 
     :param file_changes: The pull request file changes.
     :param semaphore: The semaphore.
-    :return: The review content.
+    :return: A mapping from the file name to the review content.
     """
     answer = ""
     async with semaphore:
@@ -57,4 +73,4 @@ async def _review_file_diff(
         async for review_content in review_content_iterator:
             answer += review_content
 
-    return answer
+    return {file_diff.filename: answer}

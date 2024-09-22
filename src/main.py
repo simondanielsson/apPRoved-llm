@@ -21,7 +21,7 @@ def launch_app() -> None:
 async def listen_for_messages() -> None:
     """Listen for messages from the RabbitMQ queue."""
     if config.amqp_mode == "rabbitmq":
-        logger.info("Starting AMQP consumer...")
+        logger.info("Starting RabbitMQ consumer...")
         rabbitmq_client = AsyncRabbitMQClient()
         await rabbitmq_client.connect()
 
