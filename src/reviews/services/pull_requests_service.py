@@ -66,11 +66,7 @@ async def _review_file_diff(
     :param semaphore: The semaphore.
     :return: A mapping from the file name to the review content.
     """
-    answer = ""
     async with semaphore:
-        review_content_iterator = await ReviewPullRequest.arun(request=file_diff)
-
-        async for review_content in review_content_iterator:
-            answer += review_content
+        answer = await ReviewPullRequest.arun(request=file_diff)
 
     return {file_diff.filename: answer}

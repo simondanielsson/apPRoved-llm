@@ -26,7 +26,7 @@ class ReviewPullRequest:
         cls: type[ReviewPullRequest],
         *args: Any,  # noqa: ARG003
         **kwargs: Any,
-    ) -> AsyncIterator[str]:
+    ) -> str:
         """Use the tool asynchronously.
 
         :return: Tool output.
@@ -47,7 +47,7 @@ class ReviewPullRequest:
             patch=request.patch,
             file_content=request.file_content,
         )
-        return ask_llm(
+        return await ask_llm(
             system_prompt=system_prompt,
             user_prompt=user_prompt,
         )

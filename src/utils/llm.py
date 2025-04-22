@@ -39,7 +39,7 @@ async def ask_llm(
     user_prompt: str,
     memory: list[BaseMessage] | None = None,
     llm_model: str = config.provider_to_llm[config.llm_provider],
-) -> AsyncIterator[str]:
+) -> str:
     """Ask the LLM for a response.
 
     :param system_prompt: The system prompt.
@@ -54,6 +54,4 @@ async def ask_llm(
     ]
     chat_model = get_chat_model(llm_model=llm_model)
 
-    answer_iterator = chat_model.astream(input=messages)
-    async for answer in answer_iterator:
-        yield answer.content
+    return (await chat_model.ainvoke(input=messages)).content
