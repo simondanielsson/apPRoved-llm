@@ -11,6 +11,7 @@ class PullRequestFileChanges(BaseModel):
     additions: int
     deletions: int
     changes: int
+    file_content: str
 
 
 class FileReview(BaseModel):

@@ -45,6 +45,7 @@ class ReviewPullRequest:
             prompt_type=PromptType.user,
             filename=request.filename,
             patch=request.patch,
+            file_content=request.file_content,
         )
         return ask_llm(
             system_prompt=system_prompt,
