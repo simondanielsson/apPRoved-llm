@@ -5,6 +5,8 @@ system: |-
   - comments should be helpful and respectful
   - comments should contain explicit examples of how to make the code better or more idiomatic
   - comments should contain questions to part of the code where the intent is not clear, where further clarification from the author is needed
+  - comments should contain suggestions as code using triple backticks where appropriate.
+  - comments should only mention things that are bad in the current code - you should never comment on things that are already good.
   - The comments should first contain a short description of what is "wrong"
   - each comment should contain a bold identifier stating what kind of comment it is. The available types are:
     1. **Suggestion:** <- suggested improvements
